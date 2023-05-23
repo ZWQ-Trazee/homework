@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="unique" value="" >
+    <button onclick="compare(randomnum)" style="background-color: dodgerblue; color: white;" >对比</button>
+    <button onclick="init()" style="background-color: dodgerblue; color: white;;">重置</button>
+    <script>
+        var randomnum
+        function init()
+        {
+        var number = Math.random()
+        number = Math.ceil(number * 100)
+        randomnum=(Number(number))
+        console.log(randomnum)
+        }
+
+        var Byid
+        var inputnum
+        function compare(a)
+        {   
+            Byid=document.getElementById('unique')
+            inputnum=Number(Byid.value)
+            if(inputnum>a)
+            {
+                alert('大了')
+            }
+            else if(inputnum<a)
+            {
+                alert('小了')
+            }
+            else if(inputnum==a)
+            {
+                alert('猜对了')
+            }
+        }
+    </script>
+
+</body>
+</html>
+
