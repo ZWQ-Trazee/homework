@@ -1,20 +1,22 @@
-import React, { Component } from 'react'
-export default class App1 extends Component{  
-    myref=React.createRef()  
-    state={randomnumber:'',
-        inputlang:'Please enter a number',cbuttonlang:'Compare',rbuttonlang:'Reset',
-        ifb:'Bigger',ifs:'Smaller',ifr:'Congratulations, you guessed it right'}
-    render(){
+import { useState } from "react"
+export default function App1 (){
+    const [guessnum,setGuessnum]=useState(init())
+    const [inputnum,setInputnum]=useState(0)
+    const [output,setOutput]=useState('Not compared')
     const obj={backgroundColor:'blue', color:'white'}
     return (
-    <>{this.state.inputlang}<input ref={this.myref}></input>
+    <>Please enter a number
+    <input onChange={(e)=>{
+        setInputnum(Number(e.target.value))}}></input>
     <button style={obj} onClick={()=>{
-        this.compare(Number(this.myref.current.value),this.setState.randomnumber)}}>{this.state.cbuttonlang}</button>
-    <button style={obj} onClick={()=>this.setState.randomnumber=this.init()}>{this.state.rbuttonlang}</button></>
+        compare(inputnum,guessnum)}}>compare</button>
+    <button style={obj} onClick={()=>{
+        setGuessnum(init())}}>reset</button>
+    <input type='text' name="result" disabled="disabled" value={output} />
+    </>
     )
-}
 
-    init(){
+    function init(){
     let numb = Math.random()
     numb = Math.ceil(numb * 100)
     numb=(Number(numb))
@@ -22,18 +24,18 @@ export default class App1 extends Component{
     return numb
     }
 
-    compare(a,b){   
+    function compare(a,b){   
         if(a>b)
         {
-            alert(this.state.ifb)
+            setOutput('Bigger')
         }
         else if(a<b)
         {
-            alert(this.state.ifs)
+            setOutput('Smaller')
         }
         else if(a===b)
         {
-            alert(this.state.ifr)
+            setOutput('Guess right')
         }
     }
 }
