@@ -1,16 +1,32 @@
 import React, { Component } from 'react'
-export default class App1 extends Component{  
-    myref=React.createRef()  
-    state={randomnumber:'',
-        inputlang:'请输入数字',cbuttonlang:'比较',rbuttonlang:'重置',
-        ifb:'大了',ifs:'小了',ifr:'恭喜你猜对了'}
+const initState = {guessnum:'',inputnum:'',output:''} 
+export default class App1 extends Component{   
+    state = {
+        ...initState,
+        guessnum: this.init()
+    }
     render(){
     const obj={backgroundColor:'blue', color:'white'}
+
     return (
-    <>{this.state.inputlang}<input ref={this.myref}></input>
+    <>请输入一个数字
+    <input onChange={(e)=>{
+        console.log(this.state)
+        this.setState({
+            ...this.state,
+            inputnum: Number(e.target.value) 
+        })
+        console.log(this.state.inputnum)}}></input>
     <button style={obj} onClick={()=>{
-        this.compare(Number(this.myref.current.value),this.setState.randomnumber)}}>{this.state.cbuttonlang}</button>
-    <button style={obj} onClick={()=>this.setState.randomnumber=this.init()}>{this.state.rbuttonlang}</button></>
+        this.compare(this.state.inputnum,this.state.guessnum)}}>比对</button>
+    <button style={obj} onClick={()=>{
+        this.setState({
+            ...initState,
+            guessnum: this.init()
+        })
+    }}>重置</button>
+    <input type='text' name="result" disabled="disabled" value={this.state.output} />
+    </>
     )
 }
 
@@ -25,15 +41,27 @@ export default class App1 extends Component{
     compare(a,b){   
         if(a>b)
         {
-            alert(this.state.ifb)
+            this.setState({
+                ...this.state,
+                output: '大了'
+            })
+            console.log(this.state.output)
         }
         else if(a<b)
         {
-            alert(this.state.ifs)
+            this.setState({
+                ...this.state,
+                output: '小了'
+            })
+            console.log(this.state.output)
         }
         else if(a===b)
         {
-            alert(this.state.ifr)
+            this.setState({
+                ...this.state,
+                output: '猜对了'
+            })
+            console.log(this.state.output)
         }
     }
 }
