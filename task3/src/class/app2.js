@@ -1,9 +1,12 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 export default function App1 (){
-    const [guessnum,setGuessnum]=useState(init())
+    const [guessnum,setGuessnum]=useState(0)
     const [inputnum,setInputnum]=useState(0)
     const [output,setOutput]=useState('Not compared')
     const obj={backgroundColor:'blue', color:'white'}
+    useEffect(()=>{
+        setGuessnum(init())
+    },[])
     return (
     <>Please enter a number
     <input onChange={(e)=>{
@@ -11,7 +14,7 @@ export default function App1 (){
     <button style={obj} onClick={()=>{
         compare(inputnum,guessnum)}}>compare</button>
     <button style={obj} onClick={()=>{
-        setGuessnum(init())}}>reset</button>
+        setGuessnum(init());setOutput('')}}>reset</button>
     <input type='text' name="result" disabled="disabled" value={output} />
     </>
     )
