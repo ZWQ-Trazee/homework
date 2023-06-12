@@ -1,17 +1,20 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 export default function App1 (){
-    const [guessnum,setGuessnum]=useState(init())
+    const [guessnum,setGuessnum]=useState(0)
     const [inputnum,setInputnum]=useState(0)
     const [output,setOutput]=useState('未比较')
     const obj={backgroundColor:'blue', color:'white'}
+    useEffect(()=>{
+        setGuessnum(init())
+    },[])
     return (
     <>请输入一个数字
     <input onChange={(e)=>{
         setInputnum(Number(e.target.value))}}></input>
     <button style={obj} onClick={()=>{
-        compare(inputnum,guessnum)}}>比对</button>
+        compare(inputnum,guessnum)}}>对比</button>
     <button style={obj} onClick={()=>{
-        setGuessnum(init())}}>重置</button>
+        setGuessnum(init());setOutput('')}}>重置</button>
     <input type='text' name="result" disabled="disabled" value={output} />
     </>
     )
