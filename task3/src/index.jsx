@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
-import Langselect from './class/langselect'
+import App from './app'
 
-ReactDOM.render(<Langselect />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('root'))
