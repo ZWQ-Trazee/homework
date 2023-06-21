@@ -29,9 +29,9 @@ export default function Topic () {
 		<>
 			<div style={obj}><h2>Topic</h2>
 				<ul>
-					<li><NavLink to='/topic/25'   >25</NavLink></li>
-					<li><NavLink to='/topic/50'   >50</NavLink></li>
-					<li><NavLink to='/topic/75'   >75</NavLink></li>
+					<li><NavLink to='/topic/25'>25</NavLink></li>
+					<li><NavLink to='/topic/50'>50</NavLink></li>
+					<li><NavLink to='/topic/75'>75</NavLink></li>
 					<li>
 						<input onChange={(e) => {
 							console.log('e-->', e.target.value)
@@ -49,9 +49,9 @@ export default function Topic () {
 			</div>
 			<div style={obj1}></div>
 			<Switch>
-				<Route path='/topic/25' component={Game25} ></Route>
-				<Route path='/topic/50' component={Game50} ></Route>
-				<Route path='/topic/75' component={Game75} ></Route>
+				<Route path='/topic/25' component={Game25}></Route>
+				<Route path='/topic/50' component={Game50}></Route>
+				<Route path='/topic/75' component={Game75}></Route>
 				<Route path='/topic/:id' >
 					<App value={state} />
 				</Route>

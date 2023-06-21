@@ -18,6 +18,7 @@ module.exports = {
 		'react'
 	],
 	'rules': {
+		'react/prop-types': [0, { 'ignore': '<ignore>', 'customValidators': '<customValidator>', 'skipUndeclared': '<skipUndeclared>' }],
 		'indent': [
 			'error',
 			'tab'
@@ -33,6 +34,6 @@ module.exports = {
 		'semi': [
 			'error',
 			'never'
-		],
+		]
 	}
 }

@@ -3,16 +3,27 @@ import store from '../../redux/redux'
 
 
 const App = (props) => {
-	const [randomnumber, setRandomnumber] = useState(store.getState().num)
+	const intlstate = { randomnumber: store.getState().num, output: '' }
+	const [state, setState] = useState(intlstate)
 	useEffect(() => {
 		store.subscribe(() => {
 			console.log(store.getState().num)
-			setRandomnumber(store.getState().num)
+			setState({ ...state, randomnumber: store.getState().num })
 		})
-	}, [])
 
-	console.log('props -->', randomnumber)
-	return (<div> <h2>{props.value ? props.value > randomnumber ? '大了' : (props.value < randomnumber ? '小了' : '猜对了') : ''}</h2></div >)
+	}, [])
+	useEffect(() => {
+		if (Number(props.value) > state.randomnumber)
+			setState({ ...state, output: '大了' })
+		else if (Number(props.value) < state.randomnumber)
+			setState({ ...state, output: '小了' })
+		else setState({ ...state, output: '猜对了' })
+	}, [props.value])
+
+	console.log('props -->', props)
+	return (
+		<div><h2>{state.output}</h2></div >
+	)
 }
 
 export default App
