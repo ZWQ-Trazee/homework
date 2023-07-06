@@ -3,6 +3,9 @@ const { createClient } = require('redis')
 const guessgame = express()
 const client = createClient()
 
+const Arry = process.argv.slice(2)
+const port = Arry[0]
+
 client.connect()
 
 client.get('R').then((data) => {
@@ -11,23 +14,16 @@ client.get('R').then((data) => {
 		return
 	}
 	else {
-		const R = init()
-		client.set('R', R)
-			.then(() => {
-				client.get('R')
-					.then((value) => {
-						console.log('init set value -->', value)
-					})
-			})
+		setstorenum()
 	}
 })
 
-
 guessgame.get('/start', (req, res) => {
 	res.send(`
-	<html><h2>OK</h2></html>
-	`)
+		<html><h2>OK</h2></html>
+		`)
 })
+
 guessgame.get('/:number', async (req, res) => {
 	let guessnumber = req.params.number
 
@@ -36,8 +32,8 @@ guessgame.get('/:number', async (req, res) => {
 	compare(guessnumber, Number(R), res)
 })
 
-guessgame.listen(3000, () => {
-	console.log('server-3000 start')
+guessgame.listen(port, () => {
+	console.log('server-start  port-->' + port)
 })
 
 function init () {
@@ -47,30 +43,34 @@ function init () {
 	return numb
 }
 
+async function setstorenum () {
+	const R = init()
+	await client.set('R', R)
+	const storevalue = await client.get('R')
+
+	console.log('storevalue -->', storevalue)
+}
+
 function compare (a, b, respond) {
 	if (a !== 'favicon.ico') {
 		if (a > b) {
 			console.log('Bigger ->', a)
 			respond.send(`
-			<html><h2>Bigger</h2></html>
-		`)
+				<html><h2>Bigger</h2></html>
+			`)
 		} else if (a < b) {
 			console.log('Smaller ->', a)
 			respond.send(`
-			<html><h2>Smaller</h2></html>
-		`)
+				<html><h2>Smaller</h2></html>
+			`)
 		} else if (a == b) {
 			console.log('right ->', a)
 			respond.send(`
-			<html><h2>Guess right</h2></html>
-		`)
-			const R = init()
-			client.set('R', R).then(() => {
-				client.get('R')
-					.then((compareValue) => {
-						console.log('compare set value -->', compareValue)
-					})
-			})
+				<html><h2>Guess right</h2></html>
+			`)
+			setstorenum()
 		}
 	}
 }
+
+
