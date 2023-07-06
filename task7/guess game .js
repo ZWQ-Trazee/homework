@@ -26,10 +26,13 @@ guessgame.get('/start', (req, res) => {
 
 guessgame.get('/:number', async (req, res) => {
 	let guessnumber = req.params.number
-
-	const R = await client.get('R')
-
-	compare(guessnumber, Number(R), res)
+	if (guessnumber === 'favicon.ico') return
+	else {
+		const R = await client.get('R')
+		res.send(`
+				<html><h2>${compare(guessnumber, R)}</h2></html>
+			`)
+	}
 })
 
 guessgame.listen(port, () => {
@@ -39,38 +42,25 @@ guessgame.listen(port, () => {
 function init () {
 	let numb = Math.random()
 	numb = Math.ceil(numb * 100)
-
 	return numb
 }
 
 async function setstorenum () {
 	const R = init()
 	await client.set('R', R)
-	const storevalue = await client.get('R')
-
-	console.log('storevalue -->', storevalue)
+	console.log('R -->', R)
 }
 
-function compare (a, b, respond) {
-	if (a !== 'favicon.ico') {
-		if (a > b) {
-			console.log('Bigger ->', a)
-			respond.send(`
-				<html><h2>Bigger</h2></html>
-			`)
-		} else if (a < b) {
-			console.log('Smaller ->', a)
-			respond.send(`
-				<html><h2>Smaller</h2></html>
-			`)
-		} else if (a == b) {
-			console.log('right ->', a)
-			respond.send(`
-				<html><h2>Guess right</h2></html>
-			`)
-			setstorenum()
-		}
+function compare (a, b) {
+	if (a > b) {
+		return 'Bigger'
+	} else if (a < b) {
+		return 'Smaller'
+	} else if (a == b) {
+		setstorenum()
+		return 'Guess Right'
 	}
 }
+
 
 
