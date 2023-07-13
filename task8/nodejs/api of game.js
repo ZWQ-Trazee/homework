@@ -22,8 +22,7 @@ client.get('R').then((data) => {
 		return
 	}
 	else {
-		setstorenum()
-		return
+		return setstorenum()
 	}
 })
 

@@ -9,7 +9,7 @@ const App: React.FC = () => {
 	const [iptval, setiptval] = useState<string>('')
 
 	async function restart(): Promise<void> {
-		const res = await fetch('http://' + port + '/' + 'restart')
+		const res = await fetch(`http://${port}/restart`)
 		const getdata = await res.json()
 		await setstate(getdata.data)
 		console.log(getdata.data)
@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
 	async function submit(): Promise<void> {
 		try {
-			const res = await fetch('http://' + port + '/' + iptval)
+			const res = await fetch(`http://${port}/${iptval}`)
 			const getdata = await res.json()
 			await setstate(getdata.data)
 			console.log(getdata.data)
@@ -33,14 +33,14 @@ const App: React.FC = () => {
 
 	return (
 		<>
-			<Row justify='center'><Title>Number Guesser</Title></Row>
-			<TextArea onChange={(e) => handleonchange(e)} placeholder='Guess A Number' autoSize={{ minRows: 2, maxRows: 6 }} />
+			<Row justify="center"><Title>Number Guesser</Title></Row>
+			<TextArea onChange={handleonchange} placeholder="Guess A Number" autoSize={{ minRows: 2, maxRows: 6 }} />
 			<Row>
-				<Col span={8}><Button type='primary' onClick={() => restart()}>Restart</Button></Col>
+				<Col span={8}><Button type="primary" onClick={restart}>Restart</Button></Col>
 				<Col span={8}></Col>
-				<Col span={8}><Button type='primary' onClick={() => submit()}>Submit</Button></Col>
+				<Col span={8}><Button type="primary" onClick={submit}>Submit</Button></Col>
 			</Row>
-			<Row justify={'center'}><Title type='secondary'>{state}</Title></Row>
+			<Row justify="center"><Title type="secondary">{state}</Title></Row>
 		</>
 	)
 }
