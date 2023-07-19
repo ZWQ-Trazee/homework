@@ -5,5 +5,6 @@ task6/node_modules/
 task7/node_modules/
 task8/nodejs/node_modules/
 task8/umi/node_modules/
-task9/node_modules/
-.vscode/
+task9/node api/node_modules/
+task9/node tset/node_modules/
+task9/node api/.vscode/
