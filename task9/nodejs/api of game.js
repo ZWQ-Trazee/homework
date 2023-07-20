@@ -26,29 +26,21 @@ client.get('R').then((data) => {
 	}
 })
 
-
-guessgame.get('/api/restart/:number', async (req, res) => {
+guessgame.get('/restart', async (req, res) => {
 	console.log('url-->', req.url)
-	await client.set('R', req.params.number)
-	console.log('R -->', req.params.number)
+	await client.set('R', 50)
+	console.log('R -->',50 )
 	res.send({ data: 'OK' })
 })
 
-guessgame.get('/api/:number', async (req, res) => {
+
+guessgame.get('/restart/:number', async (req, res) => {
 	console.log('url-->', req.url)
-	let guessnumber = req.params.number
-	let storenumber=await client.get('R')
-	if (guessnumber === 'favicon.ico')
-		res.status(404).send('<div>404 Not Found</div>')
-	else {
-		if(guessnumber===storenumber)
-			res.send({data:'Guess Right'})
-		if(guessnumber<storenumber)
-			res.send({data:'Smaller'})
-		if(guessnumber>storenumber)
-			res.send({data:'Bigger'})
-	}
+	await client.set('R', req.params.number)
+	console.log('R -->', req.params.number)
+	res.send({ data: 'ready' })
 })
+
 
 guessgame.get('/:number', async (req, res) => {
 	console.log('url-->', req.url)
@@ -82,7 +74,7 @@ async function compare(a, b) {
 		return 'Bigger'
 	} else if (a < b) {
 		return 'Smaller'
-	} else if (a == b) {
+	} else if (a === b) {
 		await setstorenum()
 		return 'Guess Right'
 	}
