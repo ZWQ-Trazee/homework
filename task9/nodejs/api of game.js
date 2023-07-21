@@ -27,12 +27,8 @@ client.get('R').then((data) => {
 })
 
 guessgame.get('/restart', async (req, res) => {
-	console.log('url-->', req.url)
-	await client.set('R', 50)
-	console.log('R -->',50 )
 	res.send({ data: 'OK' })
 })
-
 
 guessgame.get('/restart/:number', async (req, res) => {
 	console.log('url-->', req.url)
@@ -40,7 +36,6 @@ guessgame.get('/restart/:number', async (req, res) => {
 	console.log('R -->', req.params.number)
 	res.send({ data: 'ready' })
 })
-
 
 guessgame.get('/:number', async (req, res) => {
 	console.log('url-->', req.url)

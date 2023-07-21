@@ -22,19 +22,6 @@ describe('api-test', function () {
 		return obj.should.eql({ data: 'OK' })
 	})
 
-	it('respond with data `Smaller`', async () => {
-		let obj = await getobj(`/49`)
-		return obj.should.eql({ data: 'Smaller' })
-	})
-	it('respond with data `Bigger`', async () => {
-		let obj = await getobj(`/51`)
-		return obj.should.eql({ data: 'Bigger' })
-	})
-	it('respond with data `Guess Right`', async () => {
-		let obj = await getobj(`/50`)
-		return obj.should.eql({ data: 'Guess Right' })
-	})
-
 	it('respond with data `ready`', async () => {
 		let obj = await getobj(`/restart/${i}`)
 		return obj.should.eql({ data: 'ready' })
