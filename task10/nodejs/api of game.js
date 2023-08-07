@@ -18,12 +18,15 @@ client.connect()
 
 client.get('R').then((data) => {
 	console.log('R-->', data)
-	if (data != null) {
+	if (data != null)
 		return
-	}
 	else {
 		return setstorenum()
 	}
+})
+
+guessgame.get('/favicon.ico', (req, res) => {
+	res.status(404).send('<div>404 Not Found</div>')
 })
 
 guessgame.get('/restart', (req, res) => {
@@ -31,14 +34,11 @@ guessgame.get('/restart', (req, res) => {
 })
 
 guessgame.get('/:number', async (req, res) => {
-	console.log('url-->', req.url)
-	let guessnumber = await req.params.number	
-	if (guessnumber === 'favicon.ico')
-		res.status(404).send('<div>404 Not Found</div>')
-	else {
-		const R =  await client.get('R')
-		res.send({ data: await compare(guessnumber, R) })
-	}
+	console.log('req.params.number-->', req.params.number)
+	let guessnumber = await Number(req.params.number)
+	const R = Number(await client.get('R'))
+	const result = await compare(guessnumber, R)
+	res.send({ data: result })
 })
 
 guessgame.listen(port, () => {

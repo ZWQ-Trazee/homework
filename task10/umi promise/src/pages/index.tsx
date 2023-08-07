@@ -3,32 +3,36 @@ import { Row, Button } from 'antd'
 import requestPromise from 'request-promise'
 const port = 'localhost:3000'
 const App: React.FC = () => {
-	function search(i: number) {
+	function search(max: number, min: number) {
+		const i = (max + min) / 2
 		return requestPromise({
 			uri: `http://${port}/${i}`,
 			json: true
 		})
 			.then(res => res.data)
 			.then(res => {
-				if (res === 'Guess Right') {
-					return console.log('i-->', i)
+				if (res === 'Guess Right') return i
+				else if (res === 'Bigger') {
+					max = i
+					return search(max, min)
 				}
-				i++
-				if (i <= 1000000)
-					search(i)
-			})
-			.catch(err => console.log(err))
+				else if (res === 'Smaller') {
+					min = i
+					return search(max, min)
+				}
+			}).catch(err => console.log(err))
+	}
+	async function find() {
+		const number = await search(1000000, 0)
+		console.log(number)
 	}
 
-	function find() {
-
-		return search(0)
-
-	}
 	return (
 		<>
 			<Row justify="center"><Button type="primary" onClick={find}>find</Button>  </Row>
 		</>
 	)
+
 }
+
 export default App

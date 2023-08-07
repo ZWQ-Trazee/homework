@@ -2,29 +2,33 @@ import React from 'react'
 import { Row, Button } from 'antd'
 import request from 'request'
 
-const port = 'localhost:3000'
 const App: React.FC = () => {
-	function find() {
-
-		return search(0)
-
-	}
-	function search(i: number) {
+	const port = 'localhost:3000'
+	function search(max: number, min: number, cb: { (num: number): void}) {
+		const i = (max + min) / 2
 		return request({
 			method: 'GET',
 			url: `http://${port}/${i}`,
 			json: true,
-		}, (error: any, response: request.Response, body: any) => {
+		}, (error: unknown, response: request.Response, body: unknown) => {
 			if (error) console.log(error)
-			if (body.data === 'Guess Right') return console.log('i-->', i)
-			i++
-			if (i <= 1000000)
-				search(i)
-
+			if (body.data === 'Guess Right') return cb(i)
+			else if (body.data === 'Bigger') {
+				max = i
+				return search(max, min, cb)
+			}
+			else if (body.data === 'Smaller') {
+				min = i
+				return search(max, min, cb)
+			}
 
 		})
 	}
-
+	function find() {
+		return search(1000000, 0, (num) => {
+			console.log(num)
+		})
+	}
 
 	return (
 		<>
