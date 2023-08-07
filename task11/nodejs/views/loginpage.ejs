@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1>login-page</h1>
+	<div>
+		<div>username:<input id="username"></input></div>
+		<div>password:<input type="password" id="password"></input></div>
+		<div><button id="login">login</button></div>
+		<div><button id="register">register</button></div>
+	</div>
+	<script>
+		var username = document.querySelector('#username')
+		var password = document.querySelector('#password')
+		var register = document.querySelector('#register')
+		var login = document.querySelector('#login')
+		register.onclick = async() => {
+			console.log('username.value-->',username.value,'password.value-->', password.value)
+			var res = await fetch('/register', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					username: username.value,
+					password: password.value
+				})
+			})
+			res = await res.json()
+				alert(res.data)
+		}
+
+		login.onclick = async() => {
+			console.log('nausernameme.value-->',username.value,'password.value-->', password.value)
+			var res = await fetch('/login', {
+			method: 'POST',
+			body: JSON.stringify({
+				username: username.value,
+				password: password.value
+			}),
+			headers: { 'Content-Type': 'application/json' }
+		})
+		res = await res.json()
+		if(res.data===`hello,${username.value}`)
+			location.href = 'http://localhost:3000/guesspage'
+		alert(res.data)
+		}
+	</script>
+</body>
+
+</html>

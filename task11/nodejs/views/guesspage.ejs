@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <h1>猜数字游戏</h1>
+    <input id="myinput"/>
+    <button id="start">start</button>
+    <button id="guess">guess</button>
+</body>
+<script>
+    var myinput = document.querySelector('#myinput')
+    var start = document.querySelector('#start')
+    var guess = document.querySelector('#guess')
+    start.onclick=async()=>{
+        var res = await fetch('/start')
+			res = await res.json()
+            alert(res.data)
+    }
+    guess.onclick=async()=>{
+        var res = await fetch(`/api/${myinput.value}`)
+			res = await res.json()
+            alert(res.data)
+    }
+</script>
+</html>
