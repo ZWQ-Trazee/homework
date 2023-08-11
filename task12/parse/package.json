@@ -1,0 +1,20 @@
+{
+  "name": "task12",
+  "version": "1.0.0",
+  "description": "",
+  "main": "parse.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "http": "^0.0.1-security",
+    "parse-dashboard": "^5.1.0",
+    "parse-server": "^6.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.46.0"
+  }
+}
